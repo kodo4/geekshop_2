@@ -106,6 +106,9 @@ AUTH_PASSWORD_VALIDATORS = [
 
 AUTH_USER_MODEL = 'authapp.ShopUser'
 
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = 'tmp/email-messages/'
+
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
