@@ -1,4 +1,4 @@
-{% extends 'authapp/base.html' %}
+{% extends 'adminapp/base.html' %}
 {% load static %}
 
 {% block content %}
@@ -8,8 +8,8 @@
     <input class="form-control" type="submit" value="сохранить">
   </form>
   <button class="btn btn-round form-control last">
-    <a href="{% url 'admin:users' %}">
-      к списку пользователей
+    <a href="{% url 'admin:orders' %}">
+      к списку категорий
     </a>
   </button>
 {% endblock %}
