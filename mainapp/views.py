@@ -11,13 +11,6 @@ LINKS_MENU = [
 ]
 
 
-def get_basket(user):
-    if user.is_authenticated:
-        return Basket.objects.filter(user=user)
-    else:
-        return []
-
-
 def get_hot_product():
     products = Product.objects.all()
 
@@ -37,7 +30,6 @@ def main(request):
         'title': 'Магазин',
         'links_menu': LINKS_MENU,
         'products': products,
-        'basket': get_basket(request.user),
     }
     return render(request, 'mainapp/index.html', context=content)
 
@@ -45,7 +37,7 @@ def main(request):
 def products(request, pk=None, page=1):
     title = 'продукты'
     links_menu_category = ProductCategory.objects.all()
-    basket = get_basket(request.user)
+
 
     if pk is not None:
         if pk == 0:
@@ -72,7 +64,6 @@ def products(request, pk=None, page=1):
             'links_menu_category': links_menu_category,
             'category': category,
             'products': products_paginator,
-            'basket': basket,
         }
 
         return render(request, 'mainapp/products_list.html', content)
@@ -86,7 +77,6 @@ def products(request, pk=None, page=1):
         'links_menu_category': links_menu_category,
         'same_products': same_products,
         'hot_product': hot_product,
-        'basket': get_basket(request.user),
     }
     return render(request, 'mainapp/products.html', context=content)
 
@@ -99,7 +89,6 @@ def product(request, pk):
         'links_menu': LINKS_MENU,
         'links_menu_category': ProductCategory.objects.all(),
         'product': get_object_or_404(Product, pk=pk),
-        'basket': get_basket(request.user),
     }
 
     return render(request, 'mainapp/product.html', content)
@@ -109,6 +98,5 @@ def contact(request):
     content = {
         'title': 'Контакты',
         'links_menu': LINKS_MENU,
-        'basket': get_basket(request.user),
     }
     return render(request, 'mainapp/contact.html', context=content)

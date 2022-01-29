@@ -1,0 +1,32 @@
+{% extends 'adminapp/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        {% for object in object_list %}
+            <div class="col-sm-12">
+                <div class="thumbnail">
+                        <div class="caption">
+                        <h3>Номер заказа: {{ object.id }}</h3>
+                        <p>Логин: {{ object.user }}</p>
+                        <p>Статус: <strong>"{{ object.status }}"</strong></p>
+                        <p>Создан: {{ object.created }}</p>
+                        <p>Активен: {{ object.is_active }}</p>
+                        <p>
+                            <a href="{% url 'admin:order_update' object.pk %}"
+                               class="btn btn-primary"
+                               role="button">
+                                Редактировать
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
+
