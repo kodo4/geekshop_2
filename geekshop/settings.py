@@ -51,8 +51,8 @@ if DEBUG:
         'template_profiler_panel.panels.template.TemplateProfilerPanel',
     ]
 
-# ALLOWED_HOSTS = ['*']
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = ['*']
+# ALLOWED_HOSTS = ['localhost']
 
 # Application definition
 
