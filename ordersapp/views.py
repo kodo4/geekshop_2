@@ -14,12 +14,19 @@ from ordersapp.forms import OrderItemForm
 from django.http import JsonResponse
 from mainapp.models import Product
 
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+
 
 class OrderList(ListView):
     model = Order
 
     def get_queryset(self):
         return Order.objects.filter(user=self.request.user)
+
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+       return super(ListView, self).dispatch(*args, **kwargs)
 
 
 class OrderItemsCreate(CreateView):
@@ -69,6 +76,9 @@ class OrderItemsCreate(CreateView):
 
         return super(OrderItemsCreate, self).form_valid(form)
 
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+       return super(CreateView, self).dispatch(*args, **kwargs)
 
 class OrderRead(DetailView):
     model = Order
@@ -78,6 +88,9 @@ class OrderRead(DetailView):
         context['title'] = 'заказ/просмотр'
         return context
 
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+       return super(DetailView, self).dispatch(*args, **kwargs)
 
 class OrderItemsUpdate(UpdateView):
     model = Order
@@ -116,8 +129,11 @@ class OrderItemsUpdate(UpdateView):
 
         return super(OrderItemsUpdate, self).form_valid(form)
 
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+       return super(DetailView, self).dispatch(*args, **kwargs)
 
-class OrderDelete(DeleteView):
+class OrderDelete(UpdateView):
     model = Order
     success_url = reverse_lazy('ordersapp:orders_list')
 
