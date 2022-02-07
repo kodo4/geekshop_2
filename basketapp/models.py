@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from mainapp.models import Product
+from django.utils.functional import cached_property
 
 
 # class BasketQuerySet(models.QuerySet):
@@ -56,3 +57,15 @@ class Basket(models.Model):
     #         self.product.quantity -= self.quantity
     #     self.product.save()
     #     super(self.__class__, self).save(*args, **kwargs)
+
+    @cached_property
+    def get_items_cached(self):
+        return self.user.basket.select_related()
+
+    def get_total_quantity(self):
+        _items = self.get_items_cached
+        return sum(list(map(lambda x: x.quantity, _items)))
+
+    def get_total_cost(self):
+        _items = self.get_items_cached
+        return sum(list(map(lambda x: x.product_cost, _items)))
