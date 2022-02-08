@@ -48,7 +48,7 @@ if DEBUG:
         'debug_toolbar.panels.logging.LoggingPanel',
         'debug_toolbar.panels.redirects.RedirectsPanel',
         'debug_toolbar.panels.profiling.ProfilingPanel',
-        'template_profiler_panel.panels.template.TemplateProfilerPanel',
+        # 'template_profiler_panel.panels.template.TemplateProfilerPanel',
     ]
 
 ALLOWED_HOSTS = ['*']
@@ -66,7 +66,7 @@ INSTALLED_APPS = [
 
     'social_django',
     'debug_toolbar',
-    'template_profiler_panel',
+    # 'template_profiler_panel',
 
     'mainapp',
     'authapp',
@@ -234,3 +234,17 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = '/auth/login'
 
 LOGIN_ERROR_URL = '/'
+
+if os.name == 'posix':
+    CACHE_MIDDLEWARE_ALIAS = 'default'
+    CACHE_MIDDLEWARE_SECONDS = 120
+    CACHE_MIDDLEWARE_KEY_PREFIX = 'geekshop'
+
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+            'LOCATION': '127.0.0.1:11211',
+        }
+    }
+
+LOW_CACHE = True
